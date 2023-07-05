@@ -1,0 +1,19 @@
+{
+    "name": "ibuki-extensions-compiler",
+    "version": "1.0.0",
+    "description": "Compiler and tester for Ibuki scripts",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "main": "node index.js",
+        "test": "jest"
+    },
+    "author": "LilyStilson",
+    "license": "MIT",
+    "devDependencies": {
+        "jest": "^29.6.0"
+    },
+    "dependencies": {
+        "esprima": "^4.0.1"
+    }
+}
