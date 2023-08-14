@@ -12,7 +12,6 @@ const Extension = {
 }
 
 /// Helpers
-
 function MakeTagsFromTagsString(string, separator, space, type) {
     if (string == "" || string == null || string == undefined) return null
     let tags = string.split(separator)

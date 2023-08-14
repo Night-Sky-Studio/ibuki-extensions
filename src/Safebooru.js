@@ -12,7 +12,6 @@ const Extension = {
 }
 
 /// Helpers
-
 function MakeTagsFromTagsString(string, separator, space, type) {
     if (string == "" || string == null || string == undefined) return null
     let tags = string.split(separator)
@@ -113,7 +112,6 @@ function ParseTagJSON(json) {
 }
 
 /// Main implementation 
-
 async function GetPosts({page = 1, limit = 20, search = "", auth = ":"}) {
     const user = {
         name: auth.split(":")[0],
