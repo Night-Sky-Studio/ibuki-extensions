@@ -1,14 +1,14 @@
-declare export enum ExtensionKind {
+export enum ExtensionKind {
     SFW = "sfw", 
     NSFW = "nsfw"
 }
 
-declare export enum ExtensionType {
+export enum ExtensionType {
     XML = "xml", 
     JSON = "json"
 }
 
-declare export type Extension = {
+export type Extension = {
     name: String;
     kind: ExtensionKind;
     api_type: ExtensionType;
@@ -20,7 +20,7 @@ declare export type Extension = {
     icon: String;
 }
 
-declare export enum TagType {
+export enum TagType {
     General = "general",
     Artist = "artist",
     Copyright = "copyright",
@@ -32,13 +32,13 @@ declare export enum TagType {
     Unknown = "unknown",
 }
 
-declare export type Tag = {
+export type Tag = {
     Name: string;
-    DisplayName: string?;
+    DisplayName?: string;
     Type: TagType;
 }
 
-declare export type Post = {
+export type Post = {
     ID: number;
     PreviewFileURL: string;
     LargeFileURL: string;
@@ -54,46 +54,46 @@ declare export type Post = {
         MetaTags: Tag[] | null;
     };
     Information: {
-        UploaderID: number?;
+        UploaderID?: number;
         Score: {
             UpVotes: number;
             DownVotes: number;
             FavoritesCount: number;
         } | null;
-        Source: string?;
-        ParentID: number?;
-        HasChildren: boolean?;
+        Source?: string;
+        ParentID?: number;
+        HasChildren?: boolean;
         CreatedAt: string | any | null;
         UploadedAt: string | any | null;
-        FileExtension: string?;
-        FileSize: number?;
-        ImageWidth: number?;
-        ImageHeight: number?;
+        FileExtension?: string;
+        FileSize?: number;
+        ImageWidth?: number;
+        ImageHeight?: number;
     };
 }
 
-declare export function url(params: { 
+export function url(params: { 
     base: String,
     path: String,
     query: Array<{ key: String, value: any }> 
 }): String
 
-declare export const UserAgent = "Aster/1.0.0 Ibuki/1.0.0"
+export const UserAgent = "Aster/1.0.0 Ibuki/1.0.0"
 
-declare function MakeTagsFromTagsString(str: String, separator: String): String[];
+export function MakeTagsFromTagsString(str: String, separator: String): String[];
 
-declare function ParsePostJSON(json: String | JSON): Post?;
+export function ParsePostJSON(json: String | JSON): Post | undefined;
 
-declare function ConvertTagCategory(category: String): TagType;
+export function ConvertTagCategory(category: String): TagType;
 
-declare async function GetPosts({ page, limit, search, auth }: {
+export function GetPosts({ page, limit, search, auth }: {
     page?: number | undefined;
     limit?: number | undefined;
     search?: string | undefined;
     auth?: string | undefined;
 } | null): Promise<string>;
 
-declare async function GetTagSuggestion({ search, limit } : { 
+export function GetTagSuggestion({ search, limit } : { 
     search?: String | undefined;
     limit?: Number | undefined;
 } | null): Promise<string>;
