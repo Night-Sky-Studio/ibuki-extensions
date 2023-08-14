@@ -1,4 +1,4 @@
-/// <reference path="./API.d.ts" />
+/// <reference path="../API.d.ts" />
 
 const Extension = {
     name: "Safebooru",
@@ -114,7 +114,11 @@ function ParseTagJSON(json) {
 
 /// Main implementation 
 
-async function GetPosts({page = 1, limit = 20, search = "", auth = ""}) {
+async function GetPosts({page = 1, limit = 20, search = "", auth = ":"}) {
+    const user = {
+        name: auth.split(":")[0],
+        key: auth.split(":")[1]
+    }
     let posts = await (await fetch(url({
         base: Extension.base_url,
         path: "posts.json",
@@ -122,7 +126,8 @@ async function GetPosts({page = 1, limit = 20, search = "", auth = ""}) {
             { "page": page },
             { "limit": limit },
             { "tags": search },
-            { "auth": auth }
+            { "login": user.name },
+            { "api_key": user.key }
         ]
     }), {
         method: "GET",
@@ -151,14 +156,20 @@ async function GetPostChildren({id = 0, auth = ""}) {
 
 // Page is not included, since having page switching for a 
 // tag search bar is too cumbersome...
-async function GetTagSuggestion({search = "", limit = 20}) {
+async function GetTagSuggestion({search = "", limit = 20, auth = ":"}) {
+    const user = {
+        name: auth.split(":")[0],
+        key: auth.split(":")[1]
+    }
     let tags = await (await fetch(url({
         base: Extension.base_url,
         path: "tags.json",
         query: [
             { "search[name_matches]": `${search}*` },
             { "limit": limit },
-            { "search[order]": "count" }
+            { "search[order]": "count" },
+            { "login": user.name },
+            { "api_key": user.key }
         ]
     }), {
         method: "GET",
