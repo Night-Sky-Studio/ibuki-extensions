@@ -50,10 +50,11 @@ jobs:
     #     token: ${{ secrets.GITHUB_TOKEN }}
     - name: "Commit resulting build to release branch"
       run: |
-        ls
         cd "release"
+        ls
         git status
         git branch
+        git checkout release
 # cd "release"
 # git config user.name github-actions[bot]
 # git config user.email 41898282+github-actions[bot]@users.noreply.github.com
