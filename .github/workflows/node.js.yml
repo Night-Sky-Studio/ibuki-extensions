@@ -44,17 +44,19 @@ jobs:
         npm run build
 
     - run: ls
-    # - uses: actions/checkout@v3
-    #   with:
-    #     ref: release
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    # - name: "Commit resulting build to release branch"
-    #   run: |
-    #     cd "release"
-    #     git config user.name github-actions[bot]
-    #     git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-    #     git add .
-    #     git commit -m "Automatic commit, run id: ${{ github.run_id }}"
-    #     git push
-      
+    - uses: actions/checkout@v3
+      with:
+        ref: release
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: "Commit resulting build to release branch"
+      run: |
+        ls
+        git status
+# cd "release"
+# git config user.name github-actions[bot]
+# git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+# git add .
+# git commit -m "Automatic commit, run id: ${{ github.run_id }}"
+# git push
+
     
