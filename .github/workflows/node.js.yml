@@ -1,0 +1,52 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: "Clone master"
+      uses: actions/checkout@v3
+      with:
+        ref: master
+        path: master
+
+    - name: "Clone compiler"
+      uses: actions/checkout@v3
+      with:
+        ref: compiler
+        path: compiler
+
+    - name: "Clone release"
+      uses: actions/checkout@v3
+      with:
+        ref: compiler
+        path: release
+    
+    
+    - name: "Install Node"
+      uses: actions/setup-node@v3
+      with:
+        node-version: latest
+        cache: 'npm'
+
+    - name: "Test and build scripts"
+      run: |
+        cd "compiler/src" || exit 1
+        npm i
+        npm run build
+
+    - name: "Commit resulting build to release branch"
+      run: |
+        cd "../../release"
+        git add .
+        git commit -m "Automatic commit, job id: ${{ GITHUB_JOB }}
+      
+    
