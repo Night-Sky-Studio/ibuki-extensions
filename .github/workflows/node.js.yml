@@ -9,9 +9,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest        
     
     steps:
+    - uses: actions/checkout@v3
     - name: "Clone master"
       uses: actions/checkout@v3
       with:
@@ -30,12 +31,12 @@ jobs:
         ref: compiler
         path: release
     
-    
     - name: "Install Node"
       uses: actions/setup-node@v3
       with:
         node-version: latest
         cache: 'npm'
+        cache-dependency-path: compiler/src/package-lock.json
 
     - name: "Test and build scripts"
       run: |
@@ -44,8 +45,11 @@ jobs:
         npm run build
 
     - name: "Commit resulting build to release branch"
+
       run: |
         cd "../../release"
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         git add .
         git commit -m "Automatic commit, run id: ${{ github.run_id }}
       
