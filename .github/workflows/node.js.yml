@@ -43,11 +43,11 @@ jobs:
         npm i
         npm run build
 
-    - run: ls
-    - uses: actions/checkout@v3
-      with:
-        ref: release
-        token: ${{ secrets.GITHUB_TOKEN }}
+    # - run: ls
+    # - uses: actions/checkout@v3
+    #   with:
+    #     ref: release
+    #     token: ${{ secrets.GITHUB_TOKEN }}
     - name: "Commit resulting build to release branch"
       run: |
         ls
