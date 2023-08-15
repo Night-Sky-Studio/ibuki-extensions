@@ -9,15 +9,16 @@ export enum ExtensionType {
 }
 
 export type Extension = {
-    name: String;
+    name: string;
     kind: ExtensionKind;
     api_type: ExtensionType;
-    base_url: String;
-    tags_separator: String;
-    rate_limit: Number;
+    base_url: string;
+    tags_separator: string;
+    rate_limit: number;
     network_access: boolean;
+    version: string;
     /// The icon of the extension. Can be a URL or a base64 string.
-    icon: String;
+    icon: string;
 }
 
 export enum TagType {
@@ -73,18 +74,18 @@ export type Post = {
 }
 
 export function url(params: { 
-    base: String,
-    path: String,
-    query: Array<{ key: String, value: any }> 
-}): String
+    base: string,
+    path: string,
+    query: Array<{ key: string, value: any }> 
+}): string
 
 export const UserAgent = "Aster/1.0.0 Ibuki/1.0.0"
 
-export function MakeTagsFromTagsString(str: String, separator: String): String[];
+export function MakeTagsFromTagsString(str: string, separator: string): string[];
 
-export function ParsePostJSON(json: String | JSON): Post | undefined;
+export function ParsePostJSON(json: string | JSON): Post | undefined;
 
-export function ConvertTagCategory(category: String): TagType;
+export function ConvertTagCategory(category: string): TagType;
 
 export function GetPosts({ page, limit, search, auth }: {
     page?: number | undefined;
@@ -94,8 +95,8 @@ export function GetPosts({ page, limit, search, auth }: {
 } | null): Promise<string>;
 
 export function GetTagSuggestion({ search, limit } : { 
-    search?: String | undefined;
-    limit?: Number | undefined;
+    search?: string | undefined;
+    limit?: number | undefined;
 } | null): Promise<string>;
 
-// declare function ParsePostsJSON(json: String | JSON): Post[]?;
+// declare function ParsePostsJSON(json: string | JSON): Post[]?;
