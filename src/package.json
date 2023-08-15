@@ -5,10 +5,10 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "build": "npm run test && node index.js -i \"../../src\" -o \"../../extensions.json\"",
-        "untested": "node index.js -i \"../../src\" -o \"../../extensions.json\"",
-        "test": "mocha --input=\"../../src\"",
-        "testJson":"mocha --reporter json --input=\"../../src\""
+        "build": "npm run test && node index.js -i \"../../master/extensions\" -o \"../../release/extensions.json\"",
+        "untested": "node index.js -i \"../../master/extensions\" -o \"../../release/extensions.json\"",
+        "test": "mocha --input=\"../../master/extensions\"",
+        "testJson":"mocha --reporter json --input=\"../../master/extensions\""
     },
     "author": "LilyStilson",
     "license": "MIT",
