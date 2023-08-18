@@ -13,7 +13,7 @@ export type Extension = {
     kind: ExtensionKind;
     api_type: ExtensionType;
     base_url: string;
-    tags_separator: string;
+    tags_separator: string | null;
     rate_limit: number;
     network_access: boolean;
     version: string;
@@ -79,7 +79,7 @@ export function url(params: {
     query: Array<{ key: string, value: any }> 
 }): string
 
-export const UserAgent = "Aster/1.0.0 Ibuki/1.0.0"
+export const UserAgent = "Aster/1.0.0 Ibuki/1.0.0 (by LilyStilson on e621)"
 
 export function MakeTagsFromTagsString(str: string, separator: string): string[];
 
