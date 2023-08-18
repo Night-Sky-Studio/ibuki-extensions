@@ -20,5 +20,16 @@
         "network_access": true,
         "version": "1.0.0.0",
         "icon": "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
+    },
+    {
+        "name": "e621",
+        "kind": "nsfw",
+        "api_type": "json",
+        "base_url": "https://e621.net/",
+        "tags_separator": null,
+        "rate_limit": 500,
+        "network_access": true,
+        "version": "1.0.0.0",
+        "icon": "https://raw.githubusercontent.com/e621ng/e621ng/master/public/mstile-144x144.png?raw=true"
     }
 ]
