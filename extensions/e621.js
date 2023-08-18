@@ -5,8 +5,8 @@ const Extension = {
     kind: "nsfw",
     api_type: "json",
     base_url: "https://e621.net/",
-    tags_separator: null,   // e621 returns tags in arrays already
-    rate_limit: 500,        // Max 2 requests per second
+    tags_separator: null,   /* e621 returns tags in arrays already */
+    rate_limit: 500,        /* Max 2 requests per second */
     network_access: true,
     version: "1.0.0.0",
     icon: "https://raw.githubusercontent.com/e621ng/e621ng/master/public/mstile-144x144.png?raw=true"
