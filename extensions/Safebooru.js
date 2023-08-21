@@ -8,7 +8,7 @@ const Extension = {
     tags_separator: " ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.0",
+    version: "1.0.0.1",
     icon: "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
 }
 
@@ -27,11 +27,19 @@ function MakeTagsFromTagsString(string, separator, space, type) {
 }
 
 function ParsePostJSON(json) {
+    const isNullOrUndefined = (property) => property == null || property == undefined
+
     try {
         if (typeof(json) !== typeof(JSON)) json = JSON.parse(json)
         
         // When the required by Ibuki fields are empty - don't add this post to the returnable array
-        if (json.id == undefined || json.preview_file_url == undefined || json.large_file_url == undefined || json.is_deleted == true || json.is_banned == true) 
+        if (
+                isNullOrUndefined(json.id) 
+            || isNullOrUndefined(json.preview_file_url) 
+            || isNullOrUndefined(json.large_file_url) 
+            || json.is_deleted == true 
+            || json.is_banned == true
+        ) 
             return null
         
         return {
