@@ -8,7 +8,7 @@ const Extension = {
     tags_separator: null,   /* e621 returns tags in arrays already */
     rate_limit: 500,        /* Max 2 requests per second */
     network_access: true,
-    version: "1.0.0.0",
+    version: "1.0.0.1",
     icon: "https://raw.githubusercontent.com/e621ng/e621ng/master/public/mstile-144x144.png?raw=true"
 }
 
@@ -26,11 +26,20 @@ function ProcessTags(source, space, type) {
 }
 
 function ParsePostJSON(json) {
+    const isNullOrUndefined = (property) => property == null || property == undefined
+
     try {
         if (typeof(json) !== typeof(JSON)) json = JSON.parse(json)
         
         // When the required by Ibuki fields are empty - don't add this post to the returnable array
-        if (json.id == undefined || json.file == undefined || json.preview == undefined || json.flags.deleted == true || json.flags.flagged == true) 
+        if (    
+                isNullOrUndefined(json.id) 
+            || isNullOrUndefined(json.file) || isNullOrUndefined(json.file.url) 
+            || isNullOrUndefined(json.preview) || isNullOrUndefined(json.preview.url)
+            || isNullOrUndefined(json.sample) || (json.sample.has && isNullOrUndefined(json.sample.url))
+            || json.flags.deleted == true 
+            || json.flags.flagged == true
+        ) 
             return null
         
         return {
@@ -125,6 +134,8 @@ async function GetPosts({page = 1, limit = 20, search = "", auth = ":"}) {
             "User-Agent": UserAgent
         }
     })).json()
+
+    posts = posts.posts
 
     let result = []
     for (let i = 0; i < posts.length; i++) {
