@@ -1,5 +1,16 @@
 [
     {
+        "name": "AIBooru",
+        "kind": "nsfw",
+        "api_type": "json",
+        "base_url": "https://aibooru.online/",
+        "tags_separator": "",
+        "rate_limit": 10,
+        "network_access": true,
+        "version": "1.0.0.0",
+        "icon": "https://aibooru.online/packs/static/images/danbooru-logo-128x128-5dfe4b292bd64a786b41.png"
+    },
+    {
         "name": "Danbooru",
         "kind": "nsfw",
         "api_type": "json",
@@ -7,8 +18,19 @@
         "tags_separator": "",
         "rate_limit": 10,
         "network_access": true,
-        "version": "1.0.0.0",
+        "version": "1.0.0.1",
         "icon": "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
+    },
+    {
+        "name": "Konachan",
+        "kind": "nsfw",
+        "api_type": "json",
+        "base_url": "https://konachan.com/",
+        "tags_separator": "",
+        "rate_limit": 10,
+        "network_access": true,
+        "version": "1.0.0.0",
+        "icon": "https://play-lh.googleusercontent.com/U_veaCEvWC-ebOBbwhUhTJtNdDKyAhKsJXmDFeZ2xV2jaoIPNbRhzK7nGlKpQtusbHE"
     },
     {
         "name": "Safebooru",
@@ -18,7 +40,7 @@
         "tags_separator": "",
         "rate_limit": 10,
         "network_access": true,
-        "version": "1.0.0.0",
+        "version": "1.0.0.1",
         "icon": "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
     },
     {
