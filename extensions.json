@@ -29,7 +29,7 @@
         "tags_separator": null,
         "rate_limit": 500,
         "network_access": true,
-        "version": "1.0.0.0",
+        "version": "1.0.0.1",
         "icon": "https://raw.githubusercontent.com/e621ng/e621ng/master/public/mstile-144x144.png?raw=true"
     }
 ]
