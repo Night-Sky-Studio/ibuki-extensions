@@ -1,23 +1,22 @@
 /// <reference path="../API.d.ts" />
 
 const Extension = {
-    name: "Danbooru",
+    name: "Konachan",
     kind: "nsfw",
     api_type: "json",
-    base_url: "https://danbooru.donmai.us",
+    base_url: "https://konachan.com/",
     tags_separator: " ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.1",
-    icon: "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
+    version: "1.0.0.0",
+    icon: "https://play-lh.googleusercontent.com/U_veaCEvWC-ebOBbwhUhTJtNdDKyAhKsJXmDFeZ2xV2jaoIPNbRhzK7nGlKpQtusbHE"
 }
 
 /// Helpers
-function MakeTagsFromTagsString(string, separator, space, type) {
-    if (string == "" || string == null || string == undefined) return null
-    let tags = string.split(separator)
-    if (tags.length == 0) return null
-    return tags.map((tag) => { 
+function ProcessTags(source, separator, space, type) {
+    if (source == null || source == undefined || source.length == 0) return null
+
+    return source.split(separator).map((tag) => { 
         return { 
             Name: tag, 
             DisplayName: tag.replaceAll(space, " "), 
@@ -33,65 +32,55 @@ function ParsePostJSON(json) {
         if (typeof(json) !== typeof(JSON)) json = JSON.parse(json)
         
         // When the required by Ibuki fields are empty - don't add this post to the returnable array
-        if (
+        if (    
                 isNullOrUndefined(json.id) 
-            || isNullOrUndefined(json.preview_file_url) 
-            || isNullOrUndefined(json.large_file_url) 
-            || json.is_deleted == true 
-            || json.is_banned == true
+            || isNullOrUndefined(json.file_url)
+            || isNullOrUndefined(json.preview_url)
+            || isNullOrUndefined(json.sample_url)
+            || json.status == "deleted" 
+            || json.status == "flagged"
+            || json.is_held
         ) 
             return null
-        
+
         return {
             ID: json.id,
-            PreviewFileURL: json.preview_file_url,
-            LargeFileURL: json.large_file_url,
+            PreviewFileURL: json.preview_url,
+            LargeFileURL: json.sample_url,
             OriginalFileURL: json.file_url,
-            DirectURL: url({base: Extension.base_url, path: `posts/${json.id}`}),
+            DirectURL: url({base: Extension.base_url, path: `post/show/${json.id}`}),
             Tags: {
-                CopyrightTags: MakeTagsFromTagsString(json.tag_string_copyright, Extension.tags_separator, "_", "copyright"),
-                CharacterTags: MakeTagsFromTagsString(json.tag_string_character, Extension.tags_separator, "_", "character"),
-                SpeciesTags: null,
-                ArtistTags: MakeTagsFromTagsString(json.tag_string_artist, Extension.tags_separator, "_", "artist"),
-                LoreTags: null,
-                GeneralTags: MakeTagsFromTagsString(json.tag_string_general, Extension.tags_separator, "_", "general"),
-                MetaTags: MakeTagsFromTagsString(json.tag_string_meta, Extension.tags_separator, "_", "meta")
+                CopyrightTags:  null,
+                CharacterTags:  null,
+                SpeciesTags:    null,
+                ArtistTags:     null,
+                LoreTags:       null,
+                GeneralTags:    ProcessTags(json.tags, Extension.tags_separator, "_", "general"),
+                MetaTags:       null
             },
             Information: {
-                UploaderID: json.uploader_id,
+                UploaderID: json.creator_id,
                 Score: {
-                    UpVotes: json.up_score,
-                    DownVotes: json.down_score,
-                    FavoritesCount: json.fav_count,
+                    UpVotes: json.score,
+                    DownVotes: 0,
+                    FavoritesCount: 0,
                 },
-                Source: json.source,
+                Source: encodeURI(json.source),
                 ParentID: json.parent_id,
                 HasChildren: json.has_children,
                 CreatedAt: json.created_at,
-                UploadedAt: json.updated_at,
+                UploadedAt: null,
                 Rating: json.rating,
-                FileExtension: json.file_ext,
+                FileExtension: json.file_url.split(".").pop(),
                 FileSize: json.file_size,
-                ImageWidth: json.image_width,
-                ImageHeight: json.image_height,
+                ImageWidth: json.width,
+                ImageHeight: json.height,
             }
         }
-    } catch (_) {
+    } catch (e) {
+        console.log("Failed to parse post JSON: " + json.id)
         return null
     }
-}
- 
-function ParsePostsJSON(json) {
-    let result = []
-    let array = JSON.parse(json_string)
-    
-    for (let i = 0; i < array.length; i++) {
-        let post = ParsePostJSON(array[i])
-        if (post != null)
-            result.push(post)
-    }   
-    
-    return result
 }
 
 function ConvertTagCategory(category) {
@@ -100,7 +89,10 @@ function ConvertTagCategory(category) {
         case "1": case 1: return "artist"
         case "3": case 3: return "copyright"
         case "4": case 4: return "character"
-        case "5": case 5: return "meta"
+        case "5": case 5: return "species"
+        case "6": case 6: return "invalid"
+        case "7": case 7: return "meta"
+        case "8": case 8: return "lore"
         default: return "unknown"
     }
 }
@@ -129,7 +121,7 @@ async function GetPosts({page = 1, limit = 20, search = "", auth = ":"}) {
     }
     let posts = await (await fetch(url({
         base: Extension.base_url,
-        path: "posts.json",
+        path: "post.json",
         query: [
             { "page": page },
             { "limit": limit },
@@ -148,18 +140,20 @@ async function GetPosts({page = 1, limit = 20, search = "", auth = ":"}) {
     let result = []
     for (let i = 0; i < posts.length; i++) {
         let post = ParsePostJSON(posts[i])
-        if (post != null)
+    
+        if (post != null) 
             result.push(post)
     }
+
     return JSON.stringify(result)
 }
 
 async function GetUserFavorites({page = 1, limit = 20, username = "", auth = ":"}) {
-    return await GetPosts({page: page, limit: limit, search: `ordfav:${username}`, auth: auth})
+    return await GetPosts({page: page, limit: limit, search: `fav:${username}`, auth: auth})
 }
 
 async function GetPostChildren({id = 0, auth = ":"}) {
-    return await GetPosts({page: 1, limit: 200, search: `parent:${id} -id:${id}`, auth: auth})
+    return await GetPosts({page: 1, limit: 200, search: `parent:${id}`, auth: auth})
 }
 
 // Page is not included, since having page switching for a 
@@ -171,11 +165,11 @@ async function GetTagSuggestion({search = "", limit = 20, auth = ":"}) {
     }
     let tags = await (await fetch(url({
         base: Extension.base_url,
-        path: "tags.json",
+        path: "tag.json",
         query: [
-            { "search[name_matches]": `${search}*` },
+            { "name_pattern": `${search}*` },
             { "limit": limit },
-            { "search[order]": "count" },
+            { "order": "count" },
             { "login": user.name },
             { "api_key": user.key }
         ]

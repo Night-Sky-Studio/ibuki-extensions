@@ -1,15 +1,15 @@
 /// <reference path="../API.d.ts" />
 
 const Extension = {
-    name: "Danbooru",
+    name: "AIBooru",
     kind: "nsfw",
     api_type: "json",
-    base_url: "https://danbooru.donmai.us",
+    base_url: "https://aibooru.online/",
     tags_separator: " ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.1",
-    icon: "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
+    version: "1.0.0.0",
+    icon: "https://aibooru.online/packs/static/images/danbooru-logo-128x128-5dfe4b292bd64a786b41.png"
 }
 
 /// Helpers
@@ -27,19 +27,11 @@ function MakeTagsFromTagsString(string, separator, space, type) {
 }
 
 function ParsePostJSON(json) {
-    const isNullOrUndefined = (property) => property == null || property == undefined
-
     try {
         if (typeof(json) !== typeof(JSON)) json = JSON.parse(json)
         
         // When the required by Ibuki fields are empty - don't add this post to the returnable array
-        if (
-                isNullOrUndefined(json.id) 
-            || isNullOrUndefined(json.preview_file_url) 
-            || isNullOrUndefined(json.large_file_url) 
-            || json.is_deleted == true 
-            || json.is_banned == true
-        ) 
+        if (json.id == undefined || json.preview_file_url == undefined || json.large_file_url == undefined || json.is_deleted == true || json.is_banned == true) 
             return null
         
         return {
