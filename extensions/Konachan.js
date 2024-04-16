@@ -8,7 +8,7 @@ const Extension = {
     tags_separator: " ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.1",
+    version: "1.0.0.2",
     icon: "https://t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://konachan.net&size=32"
 }
 
