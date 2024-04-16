@@ -8,7 +8,7 @@ const Extension = {
     tags_separator: ", ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.0",
+    version: "1.0.0.1",
     icon: "https://derpibooru.org/favicon-1d9b18a7f91980befac934757ed800f5.svg?vsn=d"
 }
 
