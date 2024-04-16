@@ -8,8 +8,8 @@ const Extension = {
     tags_separator: " ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.1",
-    icon: "https://danbooru.donmai.us/packs/static/images/danbooru-logo-128x128-ea111b6658173e847734.png"
+    version: "1.0.0.2",
+    icon: "https://danbooru.donmai.us/packs/static/public/images/danbooru-logo-128x128-ea111b6658173e847734.png"
 }
 
 /// Helpers
@@ -67,6 +67,7 @@ function ParsePostJSON(json) {
                 Source: json.source,
                 ParentID: json.parent_id,
                 HasChildren: json.has_children,
+                IsPending: json.is_pending,
                 CreatedAt: json.created_at,
                 UploadedAt: json.updated_at,
                 Rating: json.rating,

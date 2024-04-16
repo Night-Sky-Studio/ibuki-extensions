@@ -8,8 +8,8 @@ const Extension = {
     tags_separator: " ",
     rate_limit: 10,
     network_access: true,
-    version: "1.0.0.0",
-    icon: "https://aibooru.online/packs/static/images/danbooru-logo-128x128-5dfe4b292bd64a786b41.png"
+    version: "1.0.0.2",
+    icon: "https://aibooru.online/packs/static/public/images/danbooru-logo-128x128-5dfe4b292bd64a786b41.png"
 }
 
 /// Helpers
@@ -59,6 +59,7 @@ function ParsePostJSON(json) {
                 Source: json.source,
                 ParentID: json.parent_id,
                 HasChildren: json.has_children,
+                IsPending: json.is_pending,
                 CreatedAt: json.created_at,
                 UploadedAt: json.updated_at,
                 Rating: json.rating,

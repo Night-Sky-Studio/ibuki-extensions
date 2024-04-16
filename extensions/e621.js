@@ -8,7 +8,7 @@ const Extension = {
     tags_separator: null,   /* e621 returns tags in arrays already */
     rate_limit: 500,        /* Max 2 requests per second */
     network_access: true,
-    version: "1.0.0.1",
+    version: "1.0.0.2",
     icon: "https://raw.githubusercontent.com/e621ng/e621ng/master/public/mstile-144x144.png?raw=true"
 }
 
@@ -67,6 +67,7 @@ function ParsePostJSON(json) {
                 Source: json.sources.length > 0 ? json.sources[0] : undefined,
                 ParentID: json.relationships.parent_id,
                 HasChildren: json.relationships.has_children,
+                IsPending: json.flags.pending,
                 CreatedAt: json.created_at,
                 UploadedAt: json.updated_at,
                 Rating: json.rating,
