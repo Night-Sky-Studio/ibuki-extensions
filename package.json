@@ -1,0 +1,19 @@
+{
+  "name": "ibuki-extensions",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "ext": "bun runner.ts",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.10",
+    "fflate": "^0.8.3"
+  }
+}
