@@ -1,6 +1,7 @@
 export type Tag = {
     name: string
     displayName?: string
+    antecedentName?: string
     category: string
 
     /** Optional count of how many posts are associated with this tag */
@@ -20,6 +21,7 @@ export interface PostTags {
     character: Tag[]
     species: Tag[]
     artist: Tag[]
+    contributor: Tag[]
     lore: Tag[]
     general: Tag[]
     meta: Tag[]
@@ -35,7 +37,7 @@ export interface PostScore {
 export interface PostInformation {
     uploaderId?: number
     score?: PostScore
-    source?: string
+    sources?: string[]
     parentId?: number
     hasChildren?: boolean
     createdAt?: string

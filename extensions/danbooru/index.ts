@@ -59,7 +59,7 @@ function mapPost(post: DanbooruPost): BooruPost | null {
                 favoritesCount: post.fav_count
             },
             rating: post.rating,
-            source: post.source,
+            sources: [post.source],
             hasChildren: post.has_children,
             parentId: post.parent_id ?? undefined,
             uploaderId: post.uploader_id
@@ -131,6 +131,7 @@ function getTagCategory(category: number): string {
 const mapTagQuery = (tag: TagQuery): Tag => ({
     name: tag.value,
     displayName: tag.label,
+    antecedentName: tag.antecedent ?? undefined,
     category: getTagCategory(tag.category)
 })
 

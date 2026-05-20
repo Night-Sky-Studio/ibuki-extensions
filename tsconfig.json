@@ -29,5 +29,5 @@
         "declaration": false,
         "sourceMap": false
     },
-    "exclude": ["./obsolete", "./tests", "./types"]
+    "exclude": ["./obsolete", "./out"]
 }
