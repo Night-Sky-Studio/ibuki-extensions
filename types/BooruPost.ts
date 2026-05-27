@@ -16,17 +16,18 @@ export interface ImageUrls {
     xlarge?: string
 }
 
-export interface PostTags {
-    copyright: Tag[]
-    character: Tag[]
-    species: Tag[]
-    artist: Tag[]
-    contributor: Tag[]
-    lore: Tag[]
-    general: Tag[]
-    meta: Tag[]
-    [key: string]: Tag[]
+export enum TagCategory {
+    copyright = "copyright",
+    character = "character",
+    species = "species",
+    artist = "artist",
+    contributor = "contributor",
+    lore = "lore",
+    general = "general",
+    meta = "meta"
 }
+
+export type PostTags = Record<string, Tag[]>
 
 export interface PostScore {
     upVotes: number

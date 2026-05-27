@@ -1,4 +1,4 @@
-import { Errors, ExtensionError, url, USER_AGENT, type BooruPost, type Extension, type Tag } from "types"
+import { Errors, ExtensionError, TagCategory, url, USER_AGENT, type BooruPost, type Extension, type Tag } from "types"
 import type { E621Post, TagQuery } from "./types"
 
 const BASE_URL = "https://e621.net"
@@ -33,15 +33,15 @@ function mapPost(post: E621Post): BooruPost | null {
             large: post.files.sample.jpg
         },
         tags: {
-            artist: post.tags.artist.map(t => mapTag(t, "artist")),
-            contributor: post.tags.contributor.map(t => mapTag(t, "contributor")),
-            character: post.tags.character.map(t => mapTag(t, "character")),
-            copyright: post.tags.copyright.map(t => mapTag(t, "copyright")),
-            species: post.tags.species.map(t => mapTag(t, "species")),
-            general: post.tags.general.map(t => mapTag(t, "general")),
-            meta: post.tags.meta.map(t => mapTag(t, "meta")),
-            lore: post.tags.lore.map(t => mapTag(t, "lore")),
-            invalid: post.tags.invalid.map(t => mapTag(t, "invalid"))
+            [TagCategory.artist]: post.tags.artist.map(t => mapTag(t, "artist")),
+            [TagCategory.contributor]: post.tags.contributor.map(t => mapTag(t, "contributor")),
+            [TagCategory.character]: post.tags.character.map(t => mapTag(t, "character")),
+            [TagCategory.copyright]: post.tags.copyright.map(t => mapTag(t, "copyright")),
+            [TagCategory.species]: post.tags.species.map(t => mapTag(t, "species")),
+            [TagCategory.general]: post.tags.general.map(t => mapTag(t, "general")),
+            [TagCategory.meta]: post.tags.meta.map(t => mapTag(t, "meta")),
+            [TagCategory.lore]: post.tags.lore.map(t => mapTag(t, "lore")),
+            invalid: post.tags.invalid.map(t => mapTag(t, "invalid")),
         },
         information: {
             uploaderId: post.uploader_id,

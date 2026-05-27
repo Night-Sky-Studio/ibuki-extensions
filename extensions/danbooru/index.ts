@@ -1,4 +1,4 @@
-import { Errors, ExtensionError, USER_AGENT, type BooruPost } from "types"
+import { Errors, ExtensionError, TagCategory, USER_AGENT, type BooruPost } from "types"
 import { type Extension, type Tag, url } from "types"
 import type { DanbooruPost, TagQuery } from "./types"
 
@@ -12,7 +12,7 @@ const mapTag = (tag: string, category: string): Tag => ({
     category: category
 })
 
-function mapPost(post: DanbooruPost): BooruPost | null {
+export function mapPost(post: DanbooruPost): BooruPost | null {
     if (
         post.file_url === undefined ||
         post.preview_file_url === undefined ||
@@ -35,15 +35,15 @@ function mapPost(post: DanbooruPost): BooruPost | null {
             large: post.large_file_url
         },
         tags: {
-            copyright: post.tag_string_copyright
+            [TagCategory.copyright]: post.tag_string_copyright
                 .split(TAG_SEPARATOR).map(t => mapTag(t, "copyright")),
-            character: post.tag_string_character
+            [TagCategory.character]: post.tag_string_character
                 .split(TAG_SEPARATOR).map(t => mapTag(t, "character")),
-            artist: post.tag_string_artist
+            [TagCategory.artist]: post.tag_string_artist
                 .split(TAG_SEPARATOR).map(t => mapTag(t, "artist")),
-            general: post.tag_string_general
+            [TagCategory.general]: post.tag_string_general
                 .split(TAG_SEPARATOR).map(t => mapTag(t, "general")),
-            meta: post.tag_string_meta
+            [TagCategory.meta]: post.tag_string_meta
                 .split(TAG_SEPARATOR).map(t => mapTag(t, "meta"))
         },
         information: {
