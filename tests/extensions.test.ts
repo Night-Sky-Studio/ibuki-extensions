@@ -1,4 +1,3 @@
-import Bun from "bun"
 import { describe, test, expect } from "bun:test"
 import path from "node:path"
 import { readdir } from "node:fs/promises"
@@ -13,14 +12,17 @@ describe("Extensions tests", async () => {
     for (const ext of extensions) {
         const extName = path.basename(ext)
 
-        describe(`${extName} base tests`, async () => {
-            const extension = await import(path.join(extensionsDir, ext, "index.ts")).then(m => m.default)
+    const extensionModule = await import(path.join(extensionsDir, ext, "index.ts"))
 
-            test("loaded", () => {
-                expect(extension).toBeDefined()
-            })
+        test("loaded", () => {
+            expect(extensionModule.default).toBeDefined()
+        })
 
-            test("getPosts({ page: 1..5, limit: 10 })", async () => {
+        describe.skipIf(extensionModule.IGNORE_TESTS)(`${extName} base tests`, async () => {
+            const extension = extensionModule.default
+
+            test.failingIf(extension.getPosts === undefined)
+            ("getPosts({ page: 1..5, limit: 10 })", async () => {
                 test.failingIf(extension.getPosts === undefined)
                 let posts: BooruPost[] = []
 
@@ -33,8 +35,8 @@ describe("Extensions tests", async () => {
                 }
             })
 
-            test("searchTags(\"a\")", async () => {
-                test.failingIf(extension.searchTags === undefined)
+            test.failingIf(extension.searchTags === undefined)
+            ("searchTags(\"a\")", async () => {
                 let tags: Tag[] = []
                 expect(async () => tags = await extension.searchTags("spo"))
                     .not.toThrow()
