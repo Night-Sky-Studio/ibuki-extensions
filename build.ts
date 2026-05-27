@@ -85,7 +85,6 @@ async function buildExtension(extension: string, debug = false) {
     console.log(`\t${extension} -> ${extensionOutput}`)
 }
 
-
 for (let i = 0; i < extensions.length; i++) {
     const extension = extensions[i]! // <-- wtf
 

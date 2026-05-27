@@ -2,7 +2,10 @@
   "name": "ibuki-extensions",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "bun build.ts",
+    "types:cs": "quicktype --src-lang typescript types/BooruPost.ts --lang csharp --out BooruPost.g.cs --framework SystemTextJson --features just-types-and-namespace --namespace Ibuki.Core.Models",
+    "types:kt": "quicktype --src-lang typescript types/BooruPost.ts --lang kotlin --out BooruPost.kt --framework kotlinx --package org.nightskystudio.ibuki.core.models",
+    "types:swift": "quicktype --src-lang typescript types/BooruPost.ts --lang swift --out BooruPost.swift --no-coding-keys --no-initializers --struct-or-class struct",
     "ext": "bun runner.ts",
     "test": "bun test"
   },
